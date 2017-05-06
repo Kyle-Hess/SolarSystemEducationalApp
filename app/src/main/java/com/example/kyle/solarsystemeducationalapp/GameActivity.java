@@ -1,13 +1,14 @@
 package com.example.kyle.solarsystemeducationalapp;
 
-import android.annotation.TargetApi;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
+import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -18,19 +19,30 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
-public class GameActivity extends AppCompatActivity {
+import java.util.Random;
+
+public class GameActivity extends AppCompatActivity implements SensorEventListener {
     private int score;
+    private SensorManager senSensorManager;
+    private Sensor senAccelerometer;
+    public String textX, textY, textZ;
 
-    TextView currentScore;
+    float x;
+    float y;
+
+    RelativeLayout relativeGame;
+    TextView currentScore, timer, tfQuizText;
     ImageView mercuryTarget,venusTarget,earthTarget,marsTarget,jupiterTarget, saturnTarget, uranusTarget, neptuneTarget,
             mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
+
+    boolean pressed = false;
+    private boolean tfAnswer;
+    private boolean userChoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +52,11 @@ public class GameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
 
+        relativeGame = (RelativeLayout) findViewById(R.id.relativeGame);
+
         currentScore = (TextView) findViewById(R.id.currentScore);
+        timer = (TextView) findViewById(R.id.timer);
+        tfQuizText = (TextView) findViewById(R.id.tfQuizText);
 
         mercuryTarget = (ImageView) findViewById(R.id.mercuryBlank);
         venusTarget = (ImageView) findViewById(R.id.venusBlank);
@@ -80,7 +96,72 @@ public class GameActivity extends AppCompatActivity {
         uranus.setOnTouchListener(new ChoiceTouchListener());
         neptune.setOnTouchListener(new ChoiceTouchListener());
 
+        getRandomQuestion();
+
+        startTimer();
+        senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
+
+    //updates question
+    private void getRandomQuestion() {
+
+        Random random = new Random();
+        int randIndex = random.nextInt(5);
+        tfQuizText.setText(tfQuiz.questions[randIndex]);
+        tfAnswer = tfQuiz.answers[randIndex];
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Sensor mySensor = sensorEvent.sensor;
+
+
+        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            x = sensorEvent.values[0];
+            y = sensorEvent.values[1];
+            //float z = sensorEvent.values[2];
+
+            if (y > 3 && y < 3.2) {
+                checkAnswerFalse();
+                //textViewY.setTextColor(Color.GREEN);
+
+            } else if (y < -3 && y > -3.2){
+               checkAnswerTrue();
+                //textViewY.setTextColor(Color.RED);
+
+            } else {
+                tfQuizText.setTextColor(Color.BLUE);
+            }
+        }
+    }
+
+    private void checkAnswerTrue() {
+        if (tfAnswer){
+            score += 5;
+            updateScore(score);
+            getRandomQuestion();
+
+        }else{
+            score -= 5;
+            updateScore(score);
+            getRandomQuestion();
+        }
+    }
+
+    private void checkAnswerFalse() {
+        if (!tfAnswer){
+            score += 5;
+            updateScore(score);
+            getRandomQuestion();
+
+        }else {
+            score -= 5;
+            updateScore(score);
+            getRandomQuestion();
+        }
+    }
+
     //// TODO: 5/05/2017 add mini T/F quiz game for bonus points. Use accelerometer left true, right false.
     private final class ChoiceTouchListener implements View.OnTouchListener {
 
@@ -103,6 +184,8 @@ public class GameActivity extends AppCompatActivity {
             int dragEvent = event.getAction();
             final View view = (View) event.getLocalState();
 
+            //testTime = true;
+
             switch (dragEvent){
                 case DragEvent.ACTION_DRAG_ENTERED:
                     break;
@@ -110,81 +193,64 @@ public class GameActivity extends AppCompatActivity {
                     break;
                 case DragEvent.ACTION_DROP:
                     if (view.getId() == R.id.mercury && v.getId() == R.id.mercuryBlank){
-                        //((ImageView)v).setImageDrawable(getResources().getDrawable(R.drawable.mercury));
-                        //((ImageView)view).setImageDrawable(null);
                         mercuryTarget.setImageResource(R.drawable.mercury);
                         mercury.setVisibility(View.GONE);
                         score +=10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
-                        currentScore.setText(String.valueOf(score));
+                        updateScore(score);
 
                     }else if (view.getId() == R.id.venus && v.getId() == R.id.venusBlank){
-                        //((ImageView)v).setImageDrawable(getResources().getDrawable(R.drawable.venus));
-                        //((ImageView)view).setImageDrawable(null);
                         venusTarget.setImageResource(R.drawable.venus);
                         venus.setVisibility(View.GONE);
                         score +=10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
-                        currentScore.setText(String.valueOf(score));
+                        updateScore(score);
 
                     }else if (view.getId() == R.id.earth && v.getId() == R.id.earthBlank){
-                        //((ImageView)v).setImageDrawable(getResources().getDrawable(R.drawable.earth));
-                        //((ImageView)view).setImageDrawable(null);
                         earthTarget.setImageResource(R.drawable.earth);
                         earth.setVisibility(View.GONE);
                         score +=10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
-                        currentScore.setText(String.valueOf(score));
+                        updateScore(score);
 
                     }else if (view.getId() == R.id.mars && v.getId() == R.id.marsBlank){
-                        //((ImageView)v).setImageDrawable(getResources().getDrawable(R.drawable.mars));
-                        //((ImageView)view).setImageDrawable(null);
-                        mars.setImageResource(R.drawable.mars);
+                        marsTarget.setImageResource(R.drawable.mars);
                         mars.setVisibility(View.GONE);
                         score +=10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
-                        currentScore.setText(String.valueOf(score));
+                        updateScore(score);
 
                     }else if (view.getId() == R.id.jupiter && v.getId() == R.id.jupiterBlank){
-                        //((ImageView)v).setImageDrawable(getResources().getDrawable(R.drawable.jupiter));
-                        //((ImageView)view).setImageDrawable(null);
                         jupiterTarget.setImageResource(R.drawable.jupiter);
                         jupiter.setVisibility(View.GONE);
                         score +=10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
-                        currentScore.setText(String.valueOf(score));
+                        updateScore(score);
 
                     }else if (view.getId() == R.id.saturn && v.getId() == R.id.saturnBlank){
-                        //((ImageView)v).setImageDrawable(getResources().getDrawable(R.drawable.saturn));
-                        //((ImageView)view).setImageDrawable(null);
                         saturnTarget.setImageResource(R.drawable.saturn);
                         saturn.setVisibility(View.GONE);
                         score +=10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
-                        currentScore.setText(String.valueOf(score));
+                        updateScore(score);
 
                     }else if (view.getId() == R.id.uranus && v.getId() == R.id.uranusBlank){
-                        //((ImageView)v).setImageDrawable(getResources().getDrawable(R.drawable.uranus));
-                        //((ImageView)view).setImageDrawable(null);
                         uranusTarget.setImageResource(R.drawable.uranus);
                         uranus.setVisibility(View.GONE);
                         score +=10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
-                        currentScore.setText(String.valueOf(score));
+                        updateScore(score);
 
                     }else if (view.getId() == R.id.neptune && v.getId() == R.id.neptuneBlank) {
-                        //((ImageView) v).setImageDrawable(getResources().getDrawable(R.drawable.neptune));
-                        //((ImageView) view).setImageDrawable(null);
                         neptuneTarget.setImageResource(R.drawable.neptune);
                         neptune.setVisibility(View.GONE);
-
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
-                        currentScore.setText(String.valueOf(score));
+                        updateScore(score);
 
                     }else{
                         score -= 5;
-                        currentScore.setText(String.valueOf(score));
+                        updateScore(score);
 
                     }
                     break;
@@ -192,6 +258,26 @@ public class GameActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    private void updateScore(int score) {
+        currentScore.setText(String.valueOf(score));
+    }
+
+    private void startTimer() {
+            new CountDownTimer(60000, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    timer.setText("" + millisUntilFinished / 1000);
+                    //here you can have your logic to set text to edittext
+                }
+
+                public void onFinish() {
+                    timer.setText("done!");
+                }
+            }.start();
+    }
+
+
 
 //    View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
 //        @Override
@@ -239,5 +325,28 @@ public class GameActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        senSensorManager.unregisterListener(this);
+    }
+
+    protected void onResume() {
+        super.onResume();
+        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 }
