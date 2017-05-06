@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,12 +8,198 @@
     tools:context="com.example.kyle.solarsystemeducationalapp.GameActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/currentScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Game"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/textView6"
+        android:text="0"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
         tools:layout_editor_absoluteX="174dp"
         tools:layout_editor_absoluteY="16dp" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/linearLayout"
+        android:text="Score: "
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        tools:layout_editor_absoluteX="174dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <RelativeLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/currentScore"
+        android:orientation="horizontal"
+        android:paddingBottom="10sp">
+
+
+        <ImageView
+            android:id="@+id/mercuryBlank"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="11dp"
+            android:layout_weight="0.00"
+            app:srcCompat="@drawable/planet_unknown" />
+
+        <ImageView
+            android:id="@+id/venusBlank"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/currentScore"
+            android:layout_marginStart="66dp"
+            android:layout_marginTop="21dp"
+            app:srcCompat="@drawable/planet_unknown" />
+
+        <ImageView
+            android:id="@+id/earthBlank"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_alignTop="@+id/venusBlank"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="19dp"
+            android:layout_toEndOf="@+id/venusBlank"
+            app:srcCompat="@drawable/planet_unknown" />
+
+        <ImageView
+            android:id="@+id/marsBlank"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_below="@+id/earthBlank"
+            android:layout_marginStart="18dp"
+            android:layout_toEndOf="@+id/earthBlank"
+            app:srcCompat="@drawable/planet_unknown" />
+
+        <ImageView
+            android:id="@+id/jupiterBlank"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_below="@+id/uranusBlank"
+            android:layout_marginStart="19dp"
+            android:layout_toEndOf="@+id/marsBlank"
+            app:srcCompat="@drawable/planet_unknown" />
+
+        <ImageView
+            android:id="@+id/saturnBlank"
+            android:layout_width="80sp"
+            android:layout_height="80sp"
+            android:layout_alignTop="@+id/mercuryBlank"
+            android:layout_marginStart="11dp"
+            android:layout_toEndOf="@+id/jupiterBlank"
+            app:srcCompat="@drawable/planet_unknown" />
+
+        <ImageView
+            android:id="@+id/uranusBlank"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/neptuneBlank"
+            app:srcCompat="@drawable/planet_unknown" />
+
+        <ImageView
+            android:id="@+id/neptuneBlank"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/saturnBlank"
+            android:layout_marginEnd="27dp"
+            app:srcCompat="@drawable/planet_unknown" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:weightSum="1"
+        android:layout_above="@+id/linearLayout2">
+
+        <TextView
+            android:id="@+id/quickQuiz"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="T/F Quiz:" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
+        android:paddingLeft="10sp"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/earth"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            app:srcCompat="@drawable/earth" />
+
+        <ImageView
+            android:id="@+id/jupiter"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            app:srcCompat="@drawable/jupiter" />
+
+        <ImageView
+            android:id="@+id/mars"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            app:srcCompat="@drawable/mars" />
+
+        <ImageView
+            android:id="@+id/neptune"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            app:srcCompat="@drawable/neptune" />
+
+        <ImageView
+            android:id="@+id/saturn"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            app:srcCompat="@drawable/saturn" />
+
+        <ImageView
+            android:id="@+id/venus"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            app:srcCompat="@drawable/venus" />
+
+        <ImageView
+            android:id="@+id/uranus"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            app:srcCompat="@drawable/uranus" />
+
+        <ImageView
+            android:id="@+id/mercury"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            app:srcCompat="@drawable/mercury" />
+
+    </LinearLayout>
+
+</RelativeLayout>

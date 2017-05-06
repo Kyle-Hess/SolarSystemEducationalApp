@@ -115,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         //findViewById(R.id.play_button).setOnTouchListener(mDelayHideTouchListener);
-        VideoView starsVideo = (VideoView) findViewById(R.id.videoView);
-        starsVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        VideoView star = (VideoView) findViewById(R.id.videoView);
+        star.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.setLooping(true);
@@ -124,9 +124,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         String uriPath = "android.resource://com.example.kyle.solarsystemeducationalapp/"+R.raw.stars;
         Uri vUri = Uri.parse(uriPath);
-        starsVideo.setVideoURI(vUri);
-        starsVideo.requestFocus();
-        starsVideo.start();
+        star.setVideoURI(vUri);
+        star.requestFocus();
+        star.start();
 
         Button play = (Button) findViewById(R.id.play_button);
         Button scores = (Button) findViewById(R.id.highscores_button);
