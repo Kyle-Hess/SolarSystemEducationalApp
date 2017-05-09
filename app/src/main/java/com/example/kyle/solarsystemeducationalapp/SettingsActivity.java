@@ -8,9 +8,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    private Switch switchMusic;
+    private RadioGroup difficulty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +24,10 @@ public class SettingsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
+
+        switchMusic = (Switch) findViewById(R.id.switchMusic);
+        difficulty = (RadioGroup) findViewById(R.id.difficulty);
+
     }
 
     @Override

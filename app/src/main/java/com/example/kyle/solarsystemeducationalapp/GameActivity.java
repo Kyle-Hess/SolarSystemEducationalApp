@@ -122,11 +122,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             y = sensorEvent.values[1];
             //float z = sensorEvent.values[2];
 
-            if (y > 3 && y < 3.2) {
+            if (y > 3 && y < 3.4) {
                 checkAnswerFalse();
                 //textViewY.setTextColor(Color.GREEN);
 
-            } else if (y < -3 && y > -3.2){
+            } else if (y < -3 && y > -3.4){
                checkAnswerTrue();
                 //textViewY.setTextColor(Color.RED);
 
@@ -264,7 +264,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void startTimer() {
-            new CountDownTimer(60000, 1000) {
+            new CountDownTimer(30000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     timer.setText("" + millisUntilFinished / 1000);
@@ -272,7 +272,13 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 }
 
                 public void onFinish() {
+
                     timer.setText("done!");
+                    Intent intent = new Intent(GameActivity.this,GameOver.class);
+                    intent.putExtra("score", score);
+                    startActivity(intent);
+
+
                 }
             }.start();
     }
