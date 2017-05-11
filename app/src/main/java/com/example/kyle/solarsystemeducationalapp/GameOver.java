@@ -20,12 +20,13 @@ public class GameOver extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
 
+
         highScore = (Button) findViewById(R.id.highScore);
         retry = (Button) findViewById(R.id.retry);
         finalScore = (TextView) findViewById(R.id.finalScore);
 
         Intent intent = getIntent();
-        hScore = intent.getIntExtra("score",0);
+        hScore = intent.getIntExtra("score", 0);
 
         finalScore.setText("Score: " + String.valueOf(hScore));
 
@@ -34,11 +35,12 @@ public class GameOver extends AppCompatActivity {
 
     }
 
+
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.highScore:
                     Intent hIntent = new Intent(GameOver.this, HighScoresActivity.class);
                     startActivity(hIntent);

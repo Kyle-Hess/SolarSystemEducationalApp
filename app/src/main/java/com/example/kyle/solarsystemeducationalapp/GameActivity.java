@@ -51,8 +51,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private int setTime = 30000;
     private int idxDifficulty;
     private CountDownTimer countDownTimer;
+    private SoundManager soundManager;
+    private int planetCorrect, endingSound;
 
-//// TODO: 10/05/2017 implement high scores database.
+    //// TODO: 10/05/2017 implement high scores database.
 //// TODO: 10/05/2017 implement sound
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         idxDifficulty = prefs.getInt("prefRadio", 0);
 
+        soundManager = new SoundManager(this);
+        planetCorrect = soundManager.addSound(R.raw.messenger_notification_sounds);
+        endingSound = soundManager.addSound(R.raw.tension);
+
         mercuryTarget = (ImageView) findViewById(R.id.mercuryBlank);
         venusTarget = (ImageView) findViewById(R.id.venusBlank);
         earthTarget = (ImageView) findViewById(R.id.earthBlank);
@@ -88,8 +94,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         saturn = (ImageView) findViewById(R.id.saturn);
         uranus = (ImageView) findViewById(R.id.uranus);
         neptune = (ImageView) findViewById(R.id.neptune);
-
-        SoundPool sp = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
 
         //listeners
         mercuryTarget.setOnDragListener(dragListener);
@@ -225,6 +229,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     if (view.getId() == R.id.mercury && v.getId() == R.id.mercuryBlank) {
                         mercuryTarget.setImageResource(R.drawable.mercury);
                         mercury.setVisibility(View.GONE);
+                        soundManager.play(planetCorrect);
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -232,6 +237,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.venus && v.getId() == R.id.venusBlank) {
                         venusTarget.setImageResource(R.drawable.venus);
                         venus.setVisibility(View.GONE);
+                        soundManager.play(planetCorrect);
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -239,6 +245,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.earth && v.getId() == R.id.earthBlank) {
                         earthTarget.setImageResource(R.drawable.earth);
                         earth.setVisibility(View.GONE);
+                        soundManager.play(planetCorrect);
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -246,6 +253,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.mars && v.getId() == R.id.marsBlank) {
                         marsTarget.setImageResource(R.drawable.mars);
                         mars.setVisibility(View.GONE);
+                        soundManager.play(planetCorrect);
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -253,6 +261,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.jupiter && v.getId() == R.id.jupiterBlank) {
                         jupiterTarget.setImageResource(R.drawable.jupiter);
                         jupiter.setVisibility(View.GONE);
+                        soundManager.play(planetCorrect);
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -260,6 +269,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.saturn && v.getId() == R.id.saturnBlank) {
                         saturnTarget.setImageResource(R.drawable.saturn);
                         saturn.setVisibility(View.GONE);
+                        soundManager.play(planetCorrect);
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -267,6 +277,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.uranus && v.getId() == R.id.uranusBlank) {
                         uranusTarget.setImageResource(R.drawable.uranus);
                         uranus.setVisibility(View.GONE);
+                        soundManager.play(planetCorrect);
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -274,6 +285,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.neptune && v.getId() == R.id.neptuneBlank) {
                         neptuneTarget.setImageResource(R.drawable.neptune);
                         neptune.setVisibility(View.GONE);
+                        soundManager.play(planetCorrect);
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -299,7 +311,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
             public void onTick(long millisUntilFinished) {
                 timer.setText("" + millisUntilFinished / 1000);
+//                if (millisUntilFinished/1000 == 15){
+//                    soundManager.play(endingSound);
+//                }
             }
+
 
             public void onFinish() {
 
@@ -307,6 +323,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 Intent intent = new Intent(GameActivity.this, GameOver.class);
                 intent.putExtra("score", score);
                 startActivity(intent);
+                soundManager.play(endingSound);
             }
         }.start();
     }

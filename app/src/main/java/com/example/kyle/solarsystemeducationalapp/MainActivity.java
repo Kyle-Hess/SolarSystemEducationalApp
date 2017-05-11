@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
 //test
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mp.setLooping(true);
             }
         });
-        String uriPath = "android.resource://com.example.kyle.solarsystemeducationalapp/"+R.raw.stars;
+        String uriPath = "android.resource://com.example.kyle.solarsystemeducationalapp/" + R.raw.stars;
         Uri vUri = Uri.parse(uriPath);
         star.setVideoURI(vUri);
         star.requestFocus();
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.play_button:
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(intent);
@@ -156,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);

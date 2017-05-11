@@ -3,6 +3,7 @@ package com.example.kyle.solarsystemeducationalapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.media.SoundPool;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -28,6 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences prefs;
     private int idxDifficulty;
+    private AudioManager audioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
+
         switchMusic = (Switch) findViewById(R.id.switchMusic);
         difficulty = (RadioGroup) findViewById(R.id.difficulty);
 
@@ -47,32 +51,31 @@ public class SettingsActivity extends AppCompatActivity {
                 updateDifficulty();
             }
         });
+
+//// TODO: 11/05/2017 Have it so only app sounds are mutes not phone system sounds
+        switchMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+
+                if (isChecked) {
+                    audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+                } else {
+                    audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+                }
+            }
+        });
     }
 
     private void updateDifficulty() {
         int radioButtonID = difficulty.getCheckedRadioButtonId();
         View radioButtonG = difficulty.findViewById(radioButtonID);
-       idxDifficulty = difficulty.indexOfChild(radioButtonG);
+        idxDifficulty = difficulty.indexOfChild(radioButtonG);
 
         System.out.println(idxDifficulty);
         prefs.edit().putInt("prefRadio", idxDifficulty).apply();
     }
 
-
-//    public SettingsActivity(Context context){
-//        this.context = context;
-//        SoundPool.Builder builder = new SoundPool.Builder();
-//        builder. setMaxStreams(10);
-//        pool = builder.build();
-//    }
-
-    public int addSound(int resourceID){
-        return pool.load(context, resourceID,1);
-    }
-
-    public void play(int soundID){
-        pool.play(soundID, 1, 1, 1, 0, 1);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -12,11 +12,17 @@ import android.widget.Toast;
 
 public class HighScoresActivity extends AppCompatActivity {
 
+    private SoundManager soundManager;
+    private int endingSound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_scores);
+
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
