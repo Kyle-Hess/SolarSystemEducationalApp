@@ -5,9 +5,9 @@
     android:id="@+id/relativeGame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/stars_space"
     android:focusable="true"
-    tools:context="com.example.kyle.solarsystemeducationalapp.GameActivity">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/currentScore"
@@ -17,6 +17,7 @@
         android:layout_toEndOf="@+id/textView6"
         android:text="0"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:textColor="@android:color/background_light"
         tools:layout_editor_absoluteX="174dp"
         tools:layout_editor_absoluteY="16dp" />
 
@@ -29,6 +30,7 @@
         android:layout_toEndOf="@+id/linearLayout"
         android:text="Score: "
         android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:textColor="@android:color/background_light"
         tools:layout_editor_absoluteX="174dp"
         tools:layout_editor_absoluteY="16dp" />
 
@@ -41,6 +43,7 @@
         android:layout_marginEnd="83dp"
         android:text="Timer:"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:textColor="@android:color/background_light"
         tools:layout_editor_absoluteX="174dp"
         tools:layout_editor_absoluteY="16dp" />
 
@@ -53,14 +56,14 @@
         android:layout_marginEnd="35dp"
         android:text="1:00"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:textColor="@android:color/background_light"
         tools:layout_editor_absoluteX="174dp"
         tools:layout_editor_absoluteY="16dp" />
 
     <RelativeLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/currentScore"
         android:orientation="horizontal"
@@ -69,40 +72,39 @@
 
         <ImageView
             android:id="@+id/mercuryBlank"
-            android:layout_width="20sp"
-            android:layout_height="20sp"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="11dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="0.00"
             app:srcCompat="@drawable/planet_unknown" />
 
         <ImageView
             android:id="@+id/venusBlank"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="66dp"
-            android:layout_marginTop="21dp"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_alignTop="@+id/mercuryBlank"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@+id/mercuryBlank"
             app:srcCompat="@drawable/planet_unknown" />
 
         <ImageView
             android:id="@+id/earthBlank"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:layout_alignTop="@+id/venusBlank"
-            android:layout_marginStart="27dp"
-            android:layout_marginTop="19dp"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_below="@+id/venusBlank"
             android:layout_toEndOf="@+id/venusBlank"
             app:srcCompat="@drawable/planet_unknown" />
 
         <ImageView
             android:id="@+id/marsBlank"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:layout_below="@+id/earthBlank"
-            android:layout_marginStart="18dp"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_below="@+id/uranusBlank"
+            android:layout_marginStart="19dp"
             android:layout_toEndOf="@+id/earthBlank"
             app:srcCompat="@drawable/planet_unknown" />
 
@@ -110,8 +112,9 @@
             android:id="@+id/jupiterBlank"
             android:layout_width="100sp"
             android:layout_height="100sp"
-            android:layout_below="@+id/uranusBlank"
-            android:layout_marginStart="19dp"
+            android:layout_alignTop="@+id/earthBlank"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="11dp"
             android:layout_toEndOf="@+id/marsBlank"
             app:srcCompat="@drawable/planet_unknown" />
 
@@ -119,8 +122,8 @@
             android:id="@+id/saturnBlank"
             android:layout_width="80sp"
             android:layout_height="80sp"
-            android:layout_alignTop="@+id/mercuryBlank"
-            android:layout_marginStart="11dp"
+            android:layout_alignBottom="@+id/marsBlank"
+            android:layout_marginStart="19dp"
             android:layout_toEndOf="@+id/jupiterBlank"
             app:srcCompat="@drawable/planet_unknown" />
 
@@ -128,17 +131,17 @@
             android:id="@+id/uranusBlank"
             android:layout_width="60sp"
             android:layout_height="60sp"
-            android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/neptuneBlank"
+            android:layout_alignTop="@+id/venusBlank"
+            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@+id/saturnBlank"
             app:srcCompat="@drawable/planet_unknown" />
 
         <ImageView
             android:id="@+id/neptuneBlank"
             android:layout_width="60sp"
             android:layout_height="60sp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/saturnBlank"
-            android:layout_marginEnd="27dp"
+            android:layout_alignBottom="@+id/saturnBlank"
+            android:layout_toEndOf="@+id/uranusBlank"
             app:srcCompat="@drawable/planet_unknown" />
     </RelativeLayout>
 
@@ -148,6 +151,7 @@
         android:layout_above="@+id/linearLayoutPlanets"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout"
+        android:background="@color/blue_overlay"
         android:orientation="horizontal"
         android:paddingBottom="3dp"
         android:weightSum="1">
@@ -157,14 +161,16 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="T/F Quiz: Left = True. Right = False" />
+            android:text="T/F Quiz: Left = True. Right = False"
+            android:textColor="@android:color/background_light" />
 
         <TextView
             android:id="@+id/tfQuizText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="@color/colorAccent" />
     </LinearLayout>
 
     <LinearLayout
@@ -173,6 +179,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:background="@color/dark_blue_overlay"
+        android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="10sp"
         android:weightSum="1">

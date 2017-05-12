@@ -118,7 +118,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         getRandomQuestion();
 
         confirmDifficulty();
+
         startTimer();
+
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
@@ -156,16 +158,16 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             y = sensorEvent.values[1];
             //float z = sensorEvent.values[2];
 
-            if (y > 3 && y < 3.4) {
+            if (y > 2.8 && y < 3) {
                 checkAnswerFalse();
                 //textViewY.setTextColor(Color.GREEN);
 
-            } else if (y < -3 && y > -3.4) {
+            } else if (y < -2.8 && y > -3) {
                 checkAnswerTrue();
                 //textViewY.setTextColor(Color.RED);
 
             } else {
-                tfQuizText.setTextColor(Color.BLUE);
+                tfQuizText.setTextColor(Color.WHITE);
             }
         }
     }
