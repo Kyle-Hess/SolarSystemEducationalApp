@@ -358,25 +358,21 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 Intent mIntent = new Intent(this, MainActivity.class);
                 startActivity(mIntent);
                 countDownTimer.cancel();
-                Toast.makeText(this, "Home selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_game:
                 Intent gIntent = new Intent(this, GameActivity.class);
                 startActivity(gIntent);
                 countDownTimer.cancel();
-                Toast.makeText(this, "Game selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_high_scores:
                 Intent hsIntent = new Intent(this, HighScoresActivity.class);
                 startActivity(hsIntent);
                 countDownTimer.cancel();
-                Toast.makeText(this, "High Scores selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_settings:
                 Intent sIntent = new Intent(this, SettingsActivity.class);
                 startActivity(sIntent);
                 countDownTimer.cancel();
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;

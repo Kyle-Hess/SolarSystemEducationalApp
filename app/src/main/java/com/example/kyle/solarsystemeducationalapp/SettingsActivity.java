@@ -90,22 +90,18 @@ public class SettingsActivity extends AppCompatActivity {
             case R.id.action_home:
                 Intent mIntent = new Intent(this, MainActivity.class);
                 startActivity(mIntent);
-                Toast.makeText(this, "Home selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_game:
                 Intent gIntent = new Intent(this, GameActivity.class);
                 startActivity(gIntent);
-                Toast.makeText(this, "Game selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_high_scores:
                 Intent hsIntent = new Intent(this, HighScoresActivity.class);
                 startActivity(hsIntent);
-                Toast.makeText(this, "High Scores selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_settings:
                 Intent sIntent = new Intent(this, SettingsActivity.class);
                 startActivity(sIntent);
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
