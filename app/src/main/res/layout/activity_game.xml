@@ -86,71 +86,81 @@
             android:id="@+id/venusBlank"
             android:layout_width="40sp"
             android:layout_height="40sp"
-            android:layout_alignTop="@+id/mercuryBlank"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="15dp"
-            android:layout_toEndOf="@+id/mercuryBlank"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="14dp"
             android:contentDescription="@string/venus"
-            app:srcCompat="@drawable/planet_unknown" />
+            app:srcCompat="@drawable/planet_unknown"
+            android:layout_alignTop="@+id/mercuryBlank"
+            android:layout_toEndOf="@+id/mercuryBlank" />
 
         <ImageView
             android:id="@+id/earthBlank"
             android:layout_width="50sp"
             android:layout_height="50sp"
-            android:layout_below="@+id/venusBlank"
-            android:layout_toEndOf="@+id/venusBlank"
             android:contentDescription="@string/earth"
-            app:srcCompat="@drawable/planet_unknown" />
+            app:srcCompat="@drawable/planet_unknown"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/venusBlank" />
 
         <ImageView
             android:id="@+id/marsBlank"
             android:layout_width="40sp"
             android:layout_height="40sp"
-            android:layout_below="@+id/uranusBlank"
-            android:layout_marginStart="19dp"
-            android:layout_toEndOf="@+id/earthBlank"
+            android:layout_marginStart="13dp"
             android:contentDescription="@string/mars"
-            app:srcCompat="@drawable/planet_unknown" />
+            app:srcCompat="@drawable/planet_unknown"
+            android:layout_alignTop="@+id/venusBlank"
+            android:layout_toEndOf="@+id/earthBlank" />
 
         <ImageView
             android:id="@+id/jupiterBlank"
             android:layout_width="100sp"
             android:layout_height="100sp"
-            android:layout_alignTop="@+id/earthBlank"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="11dp"
-            android:layout_toEndOf="@+id/marsBlank"
+            android:layout_marginStart="15dp"
             android:contentDescription="@string/jupiter"
-            app:srcCompat="@drawable/planet_unknown" />
+            app:srcCompat="@drawable/planet_unknown"
+            android:layout_below="@+id/venusBlank"
+            android:layout_toEndOf="@+id/marsBlank" />
 
         <ImageView
             android:id="@+id/saturnBlank"
             android:layout_width="80sp"
             android:layout_height="80sp"
-            android:layout_alignBottom="@+id/marsBlank"
-            android:layout_marginStart="19dp"
-            android:layout_toEndOf="@+id/jupiterBlank"
+            android:layout_marginStart="12dp"
             android:contentDescription="@string/saturn"
-            app:srcCompat="@drawable/planet_unknown" />
+            app:srcCompat="@drawable/planet_unknown"
+            android:layout_alignTop="@+id/mercuryBlank"
+            android:layout_toEndOf="@+id/jupiterBlank" />
 
         <ImageView
             android:id="@+id/uranusBlank"
             android:layout_width="60sp"
             android:layout_height="60sp"
-            android:layout_alignTop="@+id/venusBlank"
-            android:layout_marginStart="24dp"
-            android:layout_toEndOf="@+id/saturnBlank"
+            android:layout_marginStart="11dp"
             android:contentDescription="@string/uranus"
-            app:srcCompat="@drawable/planet_unknown" />
+            app:srcCompat="@drawable/planet_unknown"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/saturnBlank" />
 
         <ImageView
             android:id="@+id/neptuneBlank"
             android:layout_width="60sp"
             android:layout_height="60sp"
-            android:layout_alignBottom="@+id/saturnBlank"
-            android:layout_toEndOf="@+id/uranusBlank"
             android:contentDescription="@string/neptune"
-            app:srcCompat="@drawable/planet_unknown" />
+            app:srcCompat="@drawable/planet_unknown"
+            android:layout_below="@+id/saturnBlank"
+            android:layout_toEndOf="@+id/uranusBlank"
+            android:layout_marginStart="13dp" />
+
+        <ImageView
+            android:id="@+id/pluto_blank"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:contentDescription="@string/mercury"
+            app:srcCompat="@drawable/planet_unknown"
+            android:layout_alignTop="@+id/marsBlank"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="21dp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -190,65 +200,70 @@
         android:background="@color/dark_blue_overlay"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingLeft="10sp"
-        android:paddingRight="10sp"
         android:weightSum="1">
 
         <ImageView
             android:id="@+id/earth"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:contentDescription="@string/earth"
             app:srcCompat="@drawable/earth" />
 
         <ImageView
             android:id="@+id/jupiter"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:contentDescription="@string/jupiter"
             app:srcCompat="@drawable/jupiter" />
 
         <ImageView
             android:id="@+id/mars"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:contentDescription="@string/mars"
             app:srcCompat="@drawable/mars" />
 
         <ImageView
             android:id="@+id/neptune"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:contentDescription="@string/neptune"
             app:srcCompat="@drawable/neptune" />
 
         <ImageView
             android:id="@+id/saturn"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:contentDescription="@string/saturn"
             app:srcCompat="@drawable/saturn" />
 
         <ImageView
             android:id="@+id/venus"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:contentDescription="@string/venus"
             app:srcCompat="@drawable/venus" />
 
         <ImageView
             android:id="@+id/uranus"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:contentDescription="@string/uranus"
             app:srcCompat="@drawable/uranus" />
 
         <ImageView
             android:id="@+id/mercury"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:contentDescription="@string/mercury"
             app:srcCompat="@drawable/mercury" />
+
+        <ImageView
+            android:id="@+id/pluto"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:contentDescription="@string/mercury"
+            app:srcCompat="@drawable/pluto" />
 
     </LinearLayout>
 

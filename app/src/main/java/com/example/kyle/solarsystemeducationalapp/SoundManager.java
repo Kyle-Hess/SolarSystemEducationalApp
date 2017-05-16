@@ -10,6 +10,12 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Kyle on 10/05/2017.
  */
 
+/*
+ sound effects:
+  https://www.freesound.org/people/zzwerty/sounds/315878/
+  https://www.freesound.org/people/ERH/sounds/30306/
+ */
+
 public class SoundManager {
 
     private Context context;

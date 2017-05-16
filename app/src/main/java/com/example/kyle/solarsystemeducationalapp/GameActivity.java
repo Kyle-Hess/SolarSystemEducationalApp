@@ -1,16 +1,16 @@
 package com.example.kyle.solarsystemeducationalapp;
 
 import android.content.ClipData;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,19 +33,15 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private int score;
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
-    public String textX, textY, textZ;
 
     float x, y;
 
     RelativeLayout relativeGame;
     TextView currentScore, timer, tfQuizText;
-    ImageView mercuryTarget, venusTarget, earthTarget, marsTarget, jupiterTarget, saturnTarget, uranusTarget, neptuneTarget,
-            mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
+    ImageView mercuryTarget, venusTarget, earthTarget, marsTarget, jupiterTarget, saturnTarget, uranusTarget, neptuneTarget, plutoTarget,
+            mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, pluto;
 
-    boolean pressed = false;
     private boolean tfAnswer;
-    private boolean userChoice;
-    private SoundPool sp;
 
     SharedPreferences prefs;
     private int setTime = 30000;
@@ -53,9 +49,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private CountDownTimer countDownTimer;
     private SoundManager soundManager;
     private int planetCorrect, endingSound;
+    private boolean sound;
+    private ScoresDAOHelper scoresDAO;
 
     //// TODO: 10/05/2017 implement high scores database.
-//// TODO: 10/05/2017 implement sound
+//// TODO: 10/05/2017 implement more sounds (planet incorrect)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +62,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_game);
+        scoresDAO = new ScoresDAOHelper(this);
 
         relativeGame = (RelativeLayout) findViewById(R.id.relativeGame);
 
@@ -73,6 +72,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         idxDifficulty = prefs.getInt("prefRadio", 0);
+        sound = prefs.getBoolean("prefAudio", true);
 
         soundManager = new SoundManager(this);
         planetCorrect = soundManager.addSound(R.raw.messenger_notification_sounds);
@@ -86,6 +86,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         saturnTarget = (ImageView) findViewById(R.id.saturnBlank);
         uranusTarget = (ImageView) findViewById(R.id.uranusBlank);
         neptuneTarget = (ImageView) findViewById(R.id.neptuneBlank);
+        plutoTarget = (ImageView) findViewById(R.id.pluto_blank);
 
         mercury = (ImageView) findViewById(R.id.mercury);
         venus = (ImageView) findViewById(R.id.venus);
@@ -95,6 +96,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         saturn = (ImageView) findViewById(R.id.saturn);
         uranus = (ImageView) findViewById(R.id.uranus);
         neptune = (ImageView) findViewById(R.id.neptune);
+        pluto = (ImageView) findViewById(R.id.pluto);
 
         //listeners
         mercuryTarget.setOnDragListener(dragListener);
@@ -105,6 +107,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         saturnTarget.setOnDragListener(dragListener);
         uranusTarget.setOnDragListener(dragListener);
         neptuneTarget.setOnDragListener(dragListener);
+        plutoTarget.setOnDragListener(dragListener);
 
         //mercury.setOnLongClickListener(longClickListener);
         mercury.setOnTouchListener(new ChoiceTouchListener());
@@ -115,11 +118,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         saturn.setOnTouchListener(new ChoiceTouchListener());
         uranus.setOnTouchListener(new ChoiceTouchListener());
         neptune.setOnTouchListener(new ChoiceTouchListener());
+        pluto.setOnTouchListener(new ChoiceTouchListener());
 
         getRandomQuestion();
-
         confirmDifficulty();
-
         startTimer();
 
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -199,7 +201,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    //// TODO: 5/05/2017 add mini T/F quiz game for bonus points. Use accelerometer left true, right false.
+    //// TODO: Fix accelerometer sensitivity for quiz  left true, right false.
     private final class ChoiceTouchListener implements View.OnTouchListener {
 
         @Override
@@ -221,8 +223,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             int dragEvent = event.getAction();
             final View view = (View) event.getLocalState();
 
-            //testTime = true;
-
             switch (dragEvent) {
                 case DragEvent.ACTION_DRAG_ENTERED:
                     break;
@@ -232,7 +232,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     if (view.getId() == R.id.mercury && v.getId() == R.id.mercuryBlank) {
                         mercuryTarget.setImageResource(R.drawable.mercury);
                         mercury.setVisibility(View.GONE);
-                        soundManager.play(planetCorrect);
+                        playCorrectSound();
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -240,7 +240,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.venus && v.getId() == R.id.venusBlank) {
                         venusTarget.setImageResource(R.drawable.venus);
                         venus.setVisibility(View.GONE);
-                        soundManager.play(planetCorrect);
+                        playCorrectSound();
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -248,7 +248,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.earth && v.getId() == R.id.earthBlank) {
                         earthTarget.setImageResource(R.drawable.earth);
                         earth.setVisibility(View.GONE);
-                        soundManager.play(planetCorrect);
+                        playCorrectSound();
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -256,7 +256,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.mars && v.getId() == R.id.marsBlank) {
                         marsTarget.setImageResource(R.drawable.mars);
                         mars.setVisibility(View.GONE);
-                        soundManager.play(planetCorrect);
+                        playCorrectSound();
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -264,7 +264,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.jupiter && v.getId() == R.id.jupiterBlank) {
                         jupiterTarget.setImageResource(R.drawable.jupiter);
                         jupiter.setVisibility(View.GONE);
-                        soundManager.play(planetCorrect);
+                        playCorrectSound();
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -272,7 +272,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.saturn && v.getId() == R.id.saturnBlank) {
                         saturnTarget.setImageResource(R.drawable.saturn);
                         saturn.setVisibility(View.GONE);
-                        soundManager.play(planetCorrect);
+                        playCorrectSound();
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -280,7 +280,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.uranus && v.getId() == R.id.uranusBlank) {
                         uranusTarget.setImageResource(R.drawable.uranus);
                         uranus.setVisibility(View.GONE);
-                        soundManager.play(planetCorrect);
+                        playCorrectSound();
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -288,7 +288,15 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else if (view.getId() == R.id.neptune && v.getId() == R.id.neptuneBlank) {
                         neptuneTarget.setImageResource(R.drawable.neptune);
                         neptune.setVisibility(View.GONE);
-                        soundManager.play(planetCorrect);
+                        playCorrectSound();
+                        score += 10;
+                        Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
+                        updateScore(score);
+
+                    } else if (view.getId() == R.id.pluto && v.getId() == R.id.pluto_blank) {
+                        plutoTarget.setImageResource(R.drawable.pluto);
+                        pluto.setVisibility(View.GONE);
+                        playCorrectSound();
                         score += 10;
                         Toast.makeText(GameActivity.this, "dropped", Toast.LENGTH_SHORT).show();
                         updateScore(score);
@@ -296,7 +304,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     } else {
                         score -= 5;
                         updateScore(score);
-
                     }
                     break;
             }
@@ -304,45 +311,43 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
     };
 
+    private void playCorrectSound() {
+        if (sound) {
+            soundManager.play(planetCorrect);
+        }
+    }
+
     private void updateScore(int score) {
         currentScore.setText(String.valueOf(score));
     }
 
     private void startTimer() {
-
         countDownTimer = new CountDownTimer(setTime, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 timer.setText("" + millisUntilFinished / 1000);
-//                if (millisUntilFinished/1000 == 15){
-//                    soundManager.play(endingSound);
-//                }
             }
 
-
             public void onFinish() {
+                addScore(String.valueOf(score));
 
                 timer.setText("done!");
                 Intent intent = new Intent(GameActivity.this, GameOver.class);
                 intent.putExtra("score", score);
                 startActivity(intent);
-                soundManager.play(endingSound);
+                if (sound) {
+                    soundManager.play(endingSound);
+                }
             }
         }.start();
     }
 
-
-//    View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
-//        @Override
-//        public boolean onLongClick(View v) {
-//
-//            ClipData data = ClipData.newPlainText("","");
-//            View.DragShadowBuilder myShadowBuilder = new View.DragShadowBuilder();
-//            v.startDrag(data,myShadowBuilder,v,0);
-//            //v.startDragAndDrop(data,myShadowBuilder,v,0);
-//            return true;
-//        }
-//    };
+    public void addScore(String score) {
+        SQLiteDatabase db = scoresDAO.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("value", score);
+        db.insert("scores", null, contentValues);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -379,7 +384,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
         return true;
     }
-
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {

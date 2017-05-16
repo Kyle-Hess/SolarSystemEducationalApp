@@ -25,12 +25,10 @@ public class SettingsActivity extends AppCompatActivity {
     private Switch switchMusic;
     private RadioGroup difficulty;
 
-    private SoundPool pool;
-    private Context context;
-
     SharedPreferences prefs;
-    private int idxDifficulty;
-    private AudioManager audioManager;
+    private int idxDifficulty = 2;
+    private boolean soundCheck = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +54,16 @@ public class SettingsActivity extends AppCompatActivity {
         switchMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+
 
                 if (isChecked) {
-                    audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+                    soundCheck = true;
+                    prefs.edit().putBoolean("prefAudio",soundCheck).apply();
+
                 } else {
-                    audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+                    soundCheck = false;
+                    prefs.edit().putBoolean("prefAudio",soundCheck).apply();
+
                 }
             }
         });
@@ -129,6 +131,19 @@ public class SettingsActivity extends AppCompatActivity {
         } catch (Exception e) {
             difficulty.check(R.id.difficultyRegular);
         }
+
+        try {
+            soundCheck = prefs.getBoolean("prefAudio", soundCheck);
+
+            if (soundCheck) {
+                    switchMusic.setChecked(true);
+            }else {
+                switchMusic.setChecked(false);
+            }
+
+        } catch (Exception e) {
+            difficulty.check(R.id.difficultyRegular);
+        }
     }
 
     //when the app is closed, the unit named is saved
@@ -136,5 +151,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         prefs.edit().putInt("prefRadio", idxDifficulty).apply();
+        prefs.edit().putBoolean("prefAudio", soundCheck).apply();
     }
 }
