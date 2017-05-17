@@ -26,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
     private RadioGroup difficulty;
 
     SharedPreferences prefs;
-    private int idxDifficulty = 2;
+    private int idxDifficulty;
     private boolean soundCheck = true;
 
 

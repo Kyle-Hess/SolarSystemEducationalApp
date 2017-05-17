@@ -31,13 +31,15 @@ public class HighScoresActivity extends AppCompatActivity {
 //// TODO: 16/05/2017 Show the top 5 scores. add date of high score
     private void updateScore() {
         Cursor cursor = scoresDAO.getReadableDatabase()
-                .rawQuery("select * from scores", null);
+                .rawQuery("select * from scoretable", null);
         StringBuilder builder = new StringBuilder();
-        builder.append("scores: ");
+        builder.append("Scores: ");
         while (cursor.moveToNext()) {
             System.out.println("id: " + cursor.getString(0)
-                    + " value: " + cursor.getString(1));
-            builder.append(cursor.getString(1)).append(" ");
+                    + " value: " + cursor.getString(1) +cursor.getString(2));
+            builder.append(cursor.getString(1)).append(", ");
+            builder.append(cursor.getString(2)).append(", ");
+            builder.append(cursor.getString(3)).append(" | ");
         }
         cursor.close();
 

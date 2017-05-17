@@ -23,7 +23,7 @@
     <string name="uranus">Uranus</string>
     <string name="neptune">Neptune</string>
 
-    <string name="create_table">CREATE TABLE %1$s (_id INTEGER PRIMARY KEY, %2$s TEXT)</string>
+    <string name="create_table">CREATE TABLE IF NOT EXISTS scoretable (_id INTEGER PRIMARY KEY AUTOINCREMENT, score INTEGER, diff INTEGER, date STRING)</string>
     <string name="delete_table">DROP TABLE IF EXISTS %1$s</string>
 
 

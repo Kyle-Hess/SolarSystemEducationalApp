@@ -27,6 +27,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
@@ -161,11 +163,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             y = sensorEvent.values[1];
             //float z = sensorEvent.values[2];
 
-            if (y > 2.8 && y < 3) {
+            if (y > 2.7 && y < 3) {
                 checkAnswerFalse();
                 //textViewY.setTextColor(Color.GREEN);
 
-            } else if (y < -2.8 && y > -3) {
+            } else if (y < -2.7 && y > -3) {
                 checkAnswerTrue();
                 //textViewY.setTextColor(Color.RED);
 
@@ -329,7 +331,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             }
 
             public void onFinish() {
-                addScore(String.valueOf(score));
+                addScore();
+                //addScore(String.valueOf(idxDifficulty));
 
                 timer.setText("done!");
                 Intent intent = new Intent(GameActivity.this, GameOver.class);
@@ -342,11 +345,19 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }.start();
     }
 
-    public void addScore(String score) {
+
+    public void addScore() {
+        String dateFormat = "dd/MM";
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        String date = sdf.format(cal.getTime());
+
         SQLiteDatabase db = scoresDAO.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("value", score);
-        db.insert("scores", null, contentValues);
+        contentValues.put("score", score);
+        contentValues.put("diff",idxDifficulty);
+        contentValues.put("date",date);
+        db.insert("scoretable", null, contentValues);
     }
 
     @Override

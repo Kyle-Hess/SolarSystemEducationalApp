@@ -14,18 +14,18 @@ public class ScoresDAOHelper extends SQLiteOpenHelper {
     private Context context;
 
     ScoresDAOHelper(Context context) {
-        super(context, "scores.db", null, VERSION);
+        super(context, "scoretable.db", null, VERSION);
         this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(context.getString(R.string.create_table, "scores", "value"));
+        db.execSQL(context.getString(R.string.create_table));
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(context.getString(R.string.delete_table, "scores"));
+        db.execSQL(context.getString(R.string.delete_table, "scoretable"));
         onCreate(db);
     }
 
