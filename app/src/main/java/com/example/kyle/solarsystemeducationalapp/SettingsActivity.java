@@ -92,37 +92,37 @@ public class SettingsActivity extends AppCompatActivity {
         prefs.edit().putString("prefRadio", diffSelected).apply();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_home:
-                Intent mIntent = new Intent(this, MainActivity.class);
-                startActivity(mIntent);
-                break;
-            case R.id.action_game:
-                Intent gIntent = new Intent(this, GameActivity.class);
-                startActivity(gIntent);
-                break;
-            case R.id.action_high_scores:
-                Intent hsIntent = new Intent(this, HighScoresActivity.class);
-                startActivity(hsIntent);
-                break;
-            case R.id.action_settings:
-                Intent sIntent = new Intent(this, SettingsActivity.class);
-                startActivity(sIntent);
-                break;
-            default:
-                break;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_home:
+//                Intent mIntent = new Intent(this, MainActivity.class);
+//                startActivity(mIntent);
+//                break;
+//            case R.id.action_game:
+//                Intent gIntent = new Intent(this, GameActivity.class);
+//                startActivity(gIntent);
+//                break;
+//            case R.id.action_high_scores:
+//                Intent hsIntent = new Intent(this, HighScoresActivity.class);
+//                startActivity(hsIntent);
+//                break;
+//            case R.id.action_settings:
+//                Intent sIntent = new Intent(this, SettingsActivity.class);
+//                startActivity(sIntent);
+//                break;
+//            default:
+//                break;
+//        }
+//        return true;
+//    }
 
     @Override
     protected void onStart() {

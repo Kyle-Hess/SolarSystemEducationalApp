@@ -35,7 +35,8 @@ public class HighScoresActivity extends AppCompatActivity {
         //gridView.setAdapter(adapter);
 
     }
-//// TODO: 16/05/2017 Show the top 5 scores. add date of high score
+
+    //// TODO: 16/05/2017 Show the top 5 scores. add date of high score
     private void updateScore() {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -49,12 +50,12 @@ public class HighScoresActivity extends AppCompatActivity {
         builder.append("Scores: " + "\n");
         while (cursor.moveToNext()) {
             System.out.println("id: " + cursor.getString(0)
-                    + " value: " + cursor.getString(1) + " diff " +cursor.getString(2)+ " date " +cursor.getString(3));
+                    + " value: " + cursor.getString(1) + " diff " + cursor.getString(2) + " date " + cursor.getString(3));
             builder.append(cursor.getString(1)).append(", ");
             builder.append(cursor.getString(2)).append(", ");
             builder.append(cursor.getString(3)).append(" \n ");
 
-            String scoreList = cursor.getString(1) +", "+ cursor.getString(2)+", "+ cursor.getString(3)+"\n";
+            String scoreList = cursor.getString(1) + ", " + cursor.getString(2) + ", " + cursor.getString(3) + "\n";
             adapter.add(scoreList);
         }
         cursor.close();
@@ -83,10 +84,6 @@ public class HighScoresActivity extends AppCompatActivity {
             case R.id.action_game:
                 Intent gIntent = new Intent(this, GameActivity.class);
                 startActivity(gIntent);
-                break;
-            case R.id.action_high_scores:
-                Intent hsIntent = new Intent(this, HighScoresActivity.class);
-                startActivity(hsIntent);
                 break;
             case R.id.action_settings:
                 Intent sIntent = new Intent(this, SettingsActivity.class);

@@ -152,6 +152,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         tfQuizText.setText(tfQuiz.questions[randIndex]);
         tfAnswer = tfQuiz.answers[randIndex];
     }
+
     //// TODO: Fix accelerometer sensitivity for quiz  left true, right false.
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {

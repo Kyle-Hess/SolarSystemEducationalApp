@@ -12,7 +12,7 @@ public class tfQuiz {
     };
 
     public static boolean[] answers = new boolean[]{
-            false,false,true, true, true
+            false, false, true, true, true
     };
 
 }
