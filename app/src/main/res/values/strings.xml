@@ -23,9 +23,10 @@
     <string name="uranus">Uranus</string>
     <string name="neptune">Neptune</string>
 
-    <string name="create_table">CREATE TABLE IF NOT EXISTS scoretable (_id INTEGER PRIMARY KEY AUTOINCREMENT, score INTEGER, diff INTEGER, date STRING)</string>
+    <string name="create_table">CREATE TABLE IF NOT EXISTS scoretable (_id INTEGER PRIMARY KEY AUTOINCREMENT, score INTEGER, diff STRING, date STRING)</string>
     <string name="delete_table">DROP TABLE IF EXISTS %1$s</string>
 
+    <string name="send_to">Share score to..</string>
 
     <!-- Strings related to Settings -->
 

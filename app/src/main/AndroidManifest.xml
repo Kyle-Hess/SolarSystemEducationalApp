@@ -24,10 +24,8 @@
         </activity>
 
         <activity
-            android:name=".SettingsActivity"
-            android:parentActivityName=".GameActivity" />
-
-        <activity android:name=".HighScoresActivity" />
+            android:name=".HighScoresActivity"
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".GameActivity"
@@ -35,7 +33,13 @@
 
         <activity
             android:name=".GameOver"
-            android:parentActivityName=".GameActivity" />
+            android:parentActivityName=".GameActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+        android:name=".SettingsActivity"
+        android:parentActivityName=".GameActivity"
+        android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

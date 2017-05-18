@@ -47,12 +47,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     SharedPreferences prefs;
     private int setTime = 30000;
-    private int idxDifficulty;
     private CountDownTimer countDownTimer;
     private SoundManager soundManager;
     private int planetCorrect, endingSound;
     private boolean sound;
     private ScoresDAOHelper scoresDAO;
+    private String diffSelected = "Regular";
 
     //// TODO: 10/05/2017 implement high scores database.
 //// TODO: 10/05/2017 implement more sounds (planet incorrect)
@@ -73,7 +73,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         tfQuizText = (TextView) findViewById(R.id.tfQuizText);
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        idxDifficulty = prefs.getInt("prefRadio", 0);
+        diffSelected = prefs.getString("prefRadio", "");
         sound = prefs.getBoolean("prefAudio", true);
 
         soundManager = new SoundManager(this);
@@ -131,14 +131,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void confirmDifficulty() {
-        switch (idxDifficulty) {
-            case 0:
+        switch (diffSelected) {
+            case "Easy":
                 setTime = 60000;
                 break;
-            case 1:
+            case "Regular":
                 setTime = 30000;
                 break;
-            case 2:
+            case "Hard":
                 setTime = 15000;
                 break;
         }
@@ -152,7 +152,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         tfQuizText.setText(tfQuiz.questions[randIndex]);
         tfAnswer = tfQuiz.answers[randIndex];
     }
-
+    //// TODO: Fix accelerometer sensitivity for quiz  left true, right false.
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor mySensor = sensorEvent.sensor;
@@ -161,20 +161,23 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             x = sensorEvent.values[0];
             y = sensorEvent.values[1];
-            //float z = sensorEvent.values[2];
 
-            if (y > 2.7 && y < 3) {
+//            if (y > 2.7 && y < 3) {
+            if (y == 3) {
                 checkAnswerFalse();
-                //textViewY.setTextColor(Color.GREEN);
 
-            } else if (y < -2.7 && y > -3) {
+//            } else if (y < -2.7 && y > -3) {
+            } else if (y == -3) {
                 checkAnswerTrue();
-                //textViewY.setTextColor(Color.RED);
 
             } else {
                 tfQuizText.setTextColor(Color.WHITE);
             }
         }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
     private void checkAnswerTrue() {
@@ -203,9 +206,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    //// TODO: Fix accelerometer sensitivity for quiz  left true, right false.
     private final class ChoiceTouchListener implements View.OnTouchListener {
-
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if ((event.getAction() == MotionEvent.ACTION_DOWN) && (((ImageView) v).getDrawable() != null)) {
@@ -332,11 +333,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
             public void onFinish() {
                 addScore();
-                //addScore(String.valueOf(idxDifficulty));
 
                 timer.setText("done!");
                 Intent intent = new Intent(GameActivity.this, GameOver.class);
                 intent.putExtra("score", score);
+                intent.putExtra("diff", diffSelected);
                 startActivity(intent);
                 if (sound) {
                     soundManager.play(endingSound);
@@ -344,7 +345,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             }
         }.start();
     }
-
 
     public void addScore() {
         String dateFormat = "dd/MM";
@@ -355,8 +355,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         SQLiteDatabase db = scoresDAO.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("score", score);
-        contentValues.put("diff",idxDifficulty);
-        contentValues.put("date",date);
+        //contentValues.put("diff",idxDifficulty);
+        contentValues.put("diff", diffSelected);
+        contentValues.put("date", date);
         db.insert("scoretable", null, contentValues);
     }
 
@@ -396,10 +397,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         return true;
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
 
     @Override
     protected void onStart() {

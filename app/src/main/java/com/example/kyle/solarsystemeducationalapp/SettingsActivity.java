@@ -1,10 +1,9 @@
 package com.example.kyle.solarsystemeducationalapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
-import android.media.SoundPool;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,21 +13,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
-import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private Switch switchMusic;
     private RadioGroup difficulty;
+    private Button deleteDb;
 
     SharedPreferences prefs;
-    private int idxDifficulty;
     private boolean soundCheck = true;
-
+    private ScoresDAOHelper scoresDAO;
+    private String diffSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,18 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
+        scoresDAO = new ScoresDAOHelper(this);
 
         switchMusic = (Switch) findViewById(R.id.switchMusic);
         difficulty = (RadioGroup) findViewById(R.id.difficulty);
+        deleteDb = (Button) findViewById(R.id.delete_db);
+
+        deleteDb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAll();
+            }
+        });
 
         difficulty.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -58,26 +67,30 @@ public class SettingsActivity extends AppCompatActivity {
 
                 if (isChecked) {
                     soundCheck = true;
-                    prefs.edit().putBoolean("prefAudio",soundCheck).apply();
+                    prefs.edit().putBoolean("prefAudio", soundCheck).apply();
 
                 } else {
                     soundCheck = false;
-                    prefs.edit().putBoolean("prefAudio",soundCheck).apply();
+                    prefs.edit().putBoolean("prefAudio", soundCheck).apply();
 
                 }
             }
         });
     }
 
+    public void removeAll() {
+        SQLiteDatabase db = scoresDAO.getWritableDatabase();
+        db.execSQL("DELETE FROM scoretable");
+        db.close();
+    }
+
     private void updateDifficulty() {
         int radioButtonID = difficulty.getCheckedRadioButtonId();
         View radioButtonG = difficulty.findViewById(radioButtonID);
-        idxDifficulty = difficulty.indexOfChild(radioButtonG);
-
-        System.out.println(idxDifficulty);
-        prefs.edit().putInt("prefRadio", idxDifficulty).apply();
+        RadioButton r = (RadioButton) radioButtonG;
+        diffSelected = r.getText().toString();
+        prefs.edit().putString("prefRadio", diffSelected).apply();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,16 +128,16 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         try {
-            idxDifficulty = prefs.getInt("prefRadio", idxDifficulty);
+            diffSelected = prefs.getString("prefRadio", diffSelected);
 
-            switch (idxDifficulty) {
-                case 0:
+            switch (diffSelected) {
+                case "Easy":
                     difficulty.check(R.id.difficultyEasy);
                     break;
-                case 1:
+                case "Regular":
                     difficulty.check(R.id.difficultyRegular);
                     break;
-                case 2:
+                case "Hard":
                     difficulty.check(R.id.difficultyHard);
                     break;
             }
@@ -136,8 +149,8 @@ public class SettingsActivity extends AppCompatActivity {
             soundCheck = prefs.getBoolean("prefAudio", soundCheck);
 
             if (soundCheck) {
-                    switchMusic.setChecked(true);
-            }else {
+                switchMusic.setChecked(true);
+            } else {
                 switchMusic.setChecked(false);
             }
 
@@ -150,7 +163,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        prefs.edit().putInt("prefRadio", idxDifficulty).apply();
+        prefs.edit().putString("prefRadio", diffSelected).apply();
         prefs.edit().putBoolean("prefAudio", soundCheck).apply();
     }
 }

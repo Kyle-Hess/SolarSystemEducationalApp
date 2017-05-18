@@ -1,9 +1,9 @@
 package com.example.kyle.solarsystemeducationalapp;
 
 import android.content.Intent;
-import android.hardware.SensorEvent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,9 +13,9 @@ import android.widget.TextView;
 public class GameOver extends AppCompatActivity {
 
     private int hScore;
-    private Button highScore;
-    private Button retry;
-    private TextView finalScore;
+    private Button highScore, retry, shareScore;
+    private TextView finalScore, finalDifficulty;
+    private String difficulty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +25,23 @@ public class GameOver extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game_over);
 
-
         highScore = (Button) findViewById(R.id.highScore);
         retry = (Button) findViewById(R.id.retry);
+        shareScore = (Button) findViewById(R.id.share_score);
         finalScore = (TextView) findViewById(R.id.finalScore);
+        finalDifficulty = (TextView) findViewById(R.id.finalDifficulty);
 
         Intent intent = getIntent();
         hScore = intent.getIntExtra("score", 0);
+        difficulty = intent.getStringExtra("diff");
 
-        finalScore.setText("Score: " + String.valueOf(hScore));
+        finalScore.setText("Score: " + hScore);
+        finalDifficulty.setText("Difficulty: " + difficulty);
 
         highScore.setOnClickListener(onClickListener);
         retry.setOnClickListener(onClickListener);
-
+        shareScore.setOnClickListener(onClickListener);
     }
-
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -54,13 +56,40 @@ public class GameOver extends AppCompatActivity {
                     Intent rIntent = new Intent(GameOver.this, GameActivity.class);
                     startActivity(rIntent);
                     break;
+                case R.id.share_score:
+
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Explore the Solar System. \n My Score: " + hScore + "\n Difficulty: " + difficulty);
+                    sendIntent.setType("text/plain");
+                    startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+                    break;
                 default:
                     break;
-
-
             }
-
         }
     };
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_home:
+                Intent mIntent = new Intent(this, MainActivity.class);
+                startActivity(mIntent);
+                break;
+            case R.id.action_game:
+                Intent gIntent = new Intent(this, GameActivity.class);
+                startActivity(gIntent);
+                break;
+            case R.id.action_high_scores:
+                Intent hsIntent = new Intent(this, HighScoresActivity.class);
+                startActivity(hsIntent);
+                break;
+            case R.id.action_settings:
+                Intent sIntent = new Intent(this, SettingsActivity.class);
+                startActivity(sIntent);
+                break;
+        }
+        return true;
+    }
 }

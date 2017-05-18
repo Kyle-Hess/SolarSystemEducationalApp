@@ -16,7 +16,7 @@
         android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:paddingTop="10dp"
-        android:text="High Scores"
+        android:text="@string/high_scores"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@android:color/background_light" />
 
@@ -33,10 +33,8 @@
             android:id="@+id/scoreView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50sp"
 
-            android:gravity="center_horizontal"
-            android:text="Score: "
+            android:text="Score | Difficulty | Date"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@android:color/background_light" />
 
