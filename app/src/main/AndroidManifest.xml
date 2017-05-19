@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -22,24 +21,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".HighScoresActivity"
-            android:screenOrientation="landscape"/>
-
+            android:screenOrientation="landscape" />
         <activity
             android:name=".GameActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".GameOver"
             android:parentActivityName=".GameActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".GameActivity"
             android:screenOrientation="landscape" />
+
+        <activity android:name=".HowToPlay"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

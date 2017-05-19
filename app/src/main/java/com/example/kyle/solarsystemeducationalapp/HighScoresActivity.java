@@ -40,7 +40,7 @@ public class HighScoresActivity extends AppCompatActivity {
     private void updateScore() {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1);
+                R.layout.list_white_text);
         adapter.clear();
 
         Cursor cursor = scoresDAO.getReadableDatabase()
@@ -65,6 +65,7 @@ public class HighScoresActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
+
     }
 
     @Override

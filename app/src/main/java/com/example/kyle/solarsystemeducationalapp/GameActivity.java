@@ -163,12 +163,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             x = sensorEvent.values[0];
             y = sensorEvent.values[1];
 
-//            if (y > 2.7 && y < 3) {
-            if (y == 3) {
+            if (y > 2.7 && y < 3) {
                 checkAnswerFalse();
 
-//            } else if (y < -2.7 && y > -3) {
-            } else if (y == -3) {
+            } else if (y < -2.7 && y > -3) {
                 checkAnswerTrue();
 
             } else {

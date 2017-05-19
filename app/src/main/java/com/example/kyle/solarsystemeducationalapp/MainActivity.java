@@ -132,9 +132,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button play = (Button) findViewById(R.id.play_button);
         Button scores = (Button) findViewById(R.id.highscores_button);
         Button settings = (Button) findViewById(R.id.settings_button);
+        Button howTo = (Button) findViewById(R.id.howTo_button);
 
         play.setOnClickListener(this);
         scores.setOnClickListener(this);
+        howTo.setOnClickListener(this);
         settings.setOnClickListener(this);
     }
 
@@ -149,10 +151,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intentScores = new Intent(MainActivity.this, HighScoresActivity.class);
                 startActivity(intentScores);
                 break;
+            case R.id.howTo_button:
+                Intent intentHowTo = new Intent(MainActivity.this, HowToPlay.class);
+                startActivity(intentHowTo);
+                break;
             case R.id.settings_button:
                 Intent intentSettings = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intentSettings);
                 break;
+
             default:
                 break;
         }

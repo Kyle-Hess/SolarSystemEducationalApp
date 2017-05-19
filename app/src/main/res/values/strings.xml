@@ -27,6 +27,7 @@
     <string name="delete_table">DROP TABLE IF EXISTS %1$s</string>
 
     <string name="send_to">Share score to..</string>
+    <string name="score_diff_date">Score | Difficulty | Date</string>
 
     <!-- Strings related to Settings -->
 
@@ -99,5 +100,18 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="game_over">Game Over</string>
+    <string name="difficulty">Difficulty:</string>
+    <string name="share_score">Share Score</string>
+    <string name="retry">Retry</string>
+    <string name="music_on_off">Music On/Off</string>
+    <string name="time_difficulty">Time Difficulty:</string>
+    <string name="easy">Easy</string>
+    <string name="regular">Regular</string>
+    <string name="hard">Hard</string>
+    <string name="delete_scores">Delete Scores</string>
+    <string name="drag_drop"><![CDATA[Drag & Drop]]></string>
+    <string name="drag_drop_desc">Drag and drop the planets at the bottom of the screen to their correct positions in the Solar System. </string>
+    <string name="tf_quiz_desc">While holding you device in the horizontal position: Tilt your device left to answer TRUE or, tilt your device right to answer FALSE</string>
 
 </resources>

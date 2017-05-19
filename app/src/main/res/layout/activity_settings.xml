@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20sp"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
         android:textColor="@android:color/background_light"
         tools:layout_editor_absoluteX="161dp"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10sp"
             android:checked="true"
-            android:text=" Music On/Off"
+            android:text="@string/music_on_off"
             android:textColor="@android:color/background_light"
             tools:checked="true"
             tools:layout_editor_absoluteX="75dp"
@@ -43,7 +43,7 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Time Difficulty:"
+            android:text="@string/time_difficulty"
             android:textColor="@android:color/background_light" />
 
         <RadioGroup
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Easy"
+                android:text="@string/easy"
                 android:textColor="@android:color/background_light"
                 app:buttonTint="@color/colorAccent" />
 
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Regular"
+                android:text="@string/regular"
                 android:textColor="@android:color/background_light"
                 app:buttonTint="@color/colorAccent" />
 
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Hard"
+                android:text="@string/hard"
                 android:textColor="@android:color/background_light"
                 app:buttonTint="@color/colorAccent" />
         </RadioGroup>
@@ -84,10 +84,10 @@
             android:id="@+id/delete_db"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:background="@color/blue_overlay"
             android:padding="5dp"
-            android:text="Delete Scores"
+            android:text="@string/delete_scores"
             android:textColor="@android:color/background_light" />
     </LinearLayout>
 
