@@ -68,27 +68,4 @@ public class GameOver extends AppCompatActivity {
             }
         }
     };
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_home:
-//                Intent mIntent = new Intent(this, MainActivity.class);
-//                startActivity(mIntent);
-//                break;
-//            case R.id.action_game:
-//                Intent gIntent = new Intent(this, GameActivity.class);
-//                startActivity(gIntent);
-//                break;
-//            case R.id.action_high_scores:
-//                Intent hsIntent = new Intent(this, HighScoresActivity.class);
-//                startActivity(hsIntent);
-//                break;
-//            case R.id.action_settings:
-//                Intent sIntent = new Intent(this, SettingsActivity.class);
-//                startActivity(sIntent);
-//                break;
-//        }
-//        return true;
-//    }
 }

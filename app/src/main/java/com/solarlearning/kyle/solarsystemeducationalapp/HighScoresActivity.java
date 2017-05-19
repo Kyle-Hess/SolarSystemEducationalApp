@@ -29,16 +29,14 @@ public class HighScoresActivity extends AppCompatActivity {
         scoresDAO = new ScoresDAOHelper(this);
 
         updateScore();
-
-        //GridView gridView = (GridView)findViewById(R.id.gridView);
-        //gridView.setAdapter(adapter);
-
     }
 
-    //// TODO: 16/05/2017 Show the top 5 scores. add date of high score
+    //// TODO: 16/05/2017 Show the top 5 scores.
+
+    //updates the scores form the database in the list view
     private void updateScore() {
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.list_white_text);
         adapter.clear();
 

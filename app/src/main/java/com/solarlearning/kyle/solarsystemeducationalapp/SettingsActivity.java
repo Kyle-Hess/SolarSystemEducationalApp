@@ -54,12 +54,10 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-//// TODO: 11/05/2017 Have it so only app sounds are mutes not phone system sounds
+        //checks if the sound On/Off has been triggered
         switchMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-
                 if (isChecked) {
                     soundCheck = true;
                     prefs.edit().putBoolean("prefAudio", soundCheck).apply();
@@ -73,12 +71,14 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    //removes all scores from the data base
     public void removeAll() {
         SQLiteDatabase db = scoresDAO.getWritableDatabase();
         db.execSQL("DELETE FROM scoretable");
         db.close();
     }
 
+    //updates the selected difficulty in the radio group
     private void updateDifficulty() {
         int radioButtonID = difficulty.getCheckedRadioButtonId();
         View radioButtonG = difficulty.findViewById(radioButtonID);
@@ -87,38 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
         prefs.edit().putString("prefRadio", diffSelected).apply();
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_home:
-//                Intent mIntent = new Intent(this, MainActivity.class);
-//                startActivity(mIntent);
-//                break;
-//            case R.id.action_game:
-//                Intent gIntent = new Intent(this, GameActivity.class);
-//                startActivity(gIntent);
-//                break;
-//            case R.id.action_high_scores:
-//                Intent hsIntent = new Intent(this, HighScoresActivity.class);
-//                startActivity(hsIntent);
-//                break;
-//            case R.id.action_settings:
-//                Intent sIntent = new Intent(this, SettingsActivity.class);
-//                startActivity(sIntent);
-//                break;
-//            default:
-//                break;
-//        }
-//        return true;
-//    }
-
+    //restores the settings from when the app was last closed
     @Override
     protected void onStart() {
         super.onStart();

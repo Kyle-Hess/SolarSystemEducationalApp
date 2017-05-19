@@ -36,7 +36,8 @@
             android:parentActivityName="com.solarlearning.kyle.solarsystemeducationalapp.GameActivity"
             android:screenOrientation="landscape" />
 
-        <activity android:name="com.solarlearning.kyle.solarsystemeducationalapp.HowToPlay"
+        <activity
+            android:name="com.solarlearning.kyle.solarsystemeducationalapp.HowToPlay"
             android:parentActivityName="com.solarlearning.kyle.solarsystemeducationalapp.MainActivity" />
     </application>
 

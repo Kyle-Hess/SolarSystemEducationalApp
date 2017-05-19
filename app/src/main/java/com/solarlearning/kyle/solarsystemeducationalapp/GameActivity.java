@@ -54,8 +54,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private ScoresDAOHelper scoresDAO;
     private String diffSelected = "Regular";
 
-    //// TODO: 10/05/2017 implement high scores database.
-//// TODO: 10/05/2017 implement more sounds (planet incorrect)
+    //// TODO: 10/05/2017 implement more sounds (planet incorrect)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +99,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         neptune = (ImageView) findViewById(R.id.neptune);
         pluto = (ImageView) findViewById(R.id.pluto);
 
-        //listeners
+        //planet drag listeners
         mercuryTarget.setOnDragListener(dragListener);
         venusTarget.setOnDragListener(dragListener);
         earthTarget.setOnDragListener(dragListener);
@@ -111,7 +110,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         neptuneTarget.setOnDragListener(dragListener);
         plutoTarget.setOnDragListener(dragListener);
 
-        //mercury.setOnLongClickListener(longClickListener);
         mercury.setOnTouchListener(new ChoiceTouchListener());
         venus.setOnTouchListener(new ChoiceTouchListener());
         earth.setOnTouchListener(new ChoiceTouchListener());
@@ -130,6 +128,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
 
+    //checks the difficulty selected and changes the timer
     private void confirmDifficulty() {
         switch (diffSelected) {
             case "Easy":
@@ -144,7 +143,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    //updates question
+    //updates question at random
     private void getRandomQuestion() {
 
         Random random = new Random();
@@ -154,11 +153,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     //// TODO: Fix accelerometer sensitivity for quiz  left true, right false.
+    //accelerometer y-axis tilt for T/F quiz.
+    // If device tilted Left answer = true else if tilted right answer = false
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor mySensor = sensorEvent.sensor;
-
-
         if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             x = sensorEvent.values[0];
             y = sensorEvent.values[1];
@@ -179,6 +178,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
+    //checks if the question was true
     private void checkAnswerTrue() {
         if (tfAnswer) {
             score += 5;
@@ -192,6 +192,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    //check if the question was false
     private void checkAnswerFalse() {
         if (!tfAnswer) {
             score += 5;
@@ -205,6 +206,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    //handle the drag motion
     private final class ChoiceTouchListener implements View.OnTouchListener {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -219,6 +221,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    //check if the planet was dragged to the correct location, then adds or subtracts the score.
     View.OnDragListener dragListener = new View.OnDragListener() {
         @Override
         public boolean onDrag(View v, DragEvent event) {
@@ -323,6 +326,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         currentScore.setText(String.valueOf(score));
     }
 
+    //countdown timer
     private void startTimer() {
         countDownTimer = new CountDownTimer(setTime, 1000) {
 
@@ -345,6 +349,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }.start();
     }
 
+    //Saves the score to a data base
     public void addScore() {
         String dateFormat = "dd/MM";
         Calendar cal = Calendar.getInstance();
@@ -354,12 +359,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         SQLiteDatabase db = scoresDAO.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("score", score);
-        //contentValues.put("diff",idxDifficulty);
         contentValues.put("diff", diffSelected);
         contentValues.put("date", date);
         db.insert("scoretable", null, contentValues);
     }
 
+    //inflates the action bar with menu items to select different activities
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -395,7 +400,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
         return true;
     }
-
 
     @Override
     protected void onStart() {

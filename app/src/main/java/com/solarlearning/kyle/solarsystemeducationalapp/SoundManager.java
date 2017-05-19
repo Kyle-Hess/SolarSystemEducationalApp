@@ -1,11 +1,10 @@
 package com.solarlearning.kyle.solarsystemeducationalapp;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.media.SoundPool;
 
 /**
- * Created by Kyle on 10/05/2017.
+  Created by Kyle on 10/05/2017.
  */
 
 /*
@@ -18,21 +17,13 @@ public class SoundManager {
 
     private Context context;
     private SoundPool pool;
-    private boolean isOnOff;
-
 
     public SoundManager(Context context) {
-        SharedPreferences prefs;
-//        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-//        isOnOff = prefs.getBoolean("prefsound", true);
-
         this.context = context;
         SoundPool.Builder builder = new SoundPool.Builder();
         builder.setMaxStreams(10);
         pool = builder.build();
-
     }
-
 
     public int addSound(int resourceID) {
 

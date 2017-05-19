@@ -1,9 +1,10 @@
 package com.solarlearning.kyle.solarsystemeducationalapp;
 
 /**
- * Created by Kyle on 6/05/2017.
+  Created by Kyle on 6/05/2017.
  */
 
+//stores the T/F questions and the corresponding answers
 public class tfQuiz {
 
     public static String[] questions = new String[]{
