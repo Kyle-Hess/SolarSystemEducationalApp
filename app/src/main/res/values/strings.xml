@@ -113,5 +113,6 @@
     <string name="drag_drop"><![CDATA[Drag & Drop]]></string>
     <string name="drag_drop_desc">Drag and drop the planets at the bottom of the screen to their correct positions in the Solar System. </string>
     <string name="tf_quiz_desc">While holding you device in the horizontal position: Tilt your device left to answer TRUE or, tilt your device right to answer FALSE</string>
+    <string name="true_false_quiz">True/False Quiz</string>
 
 </resources>
