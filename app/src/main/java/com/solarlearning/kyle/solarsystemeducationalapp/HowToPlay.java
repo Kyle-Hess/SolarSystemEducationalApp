@@ -1,4 +1,4 @@
-package com.example.kyle.solarsystemeducationalapp;
+package com.solarlearning.kyle.solarsystemeducationalapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

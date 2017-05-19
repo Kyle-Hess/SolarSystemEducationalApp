@@ -1,4 +1,4 @@
-package com.example.kyle.solarsystemeducationalapp;
+package com.solarlearning.kyle.solarsystemeducationalapp;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

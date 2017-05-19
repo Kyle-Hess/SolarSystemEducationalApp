@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/outer_space"
     android:orientation="vertical"
-    tools:context="com.example.kyle.solarsystemeducationalapp.GameOver">
+    tools:context="com.solarlearning.kyle.solarsystemeducationalapp.GameOver">
 
     <LinearLayout
         android:layout_width="match_parent"

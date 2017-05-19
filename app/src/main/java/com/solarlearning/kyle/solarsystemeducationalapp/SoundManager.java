@@ -1,10 +1,8 @@
-package com.example.kyle.solarsystemeducationalapp;
+package com.solarlearning.kyle.solarsystemeducationalapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.SoundPool;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Kyle on 10/05/2017.

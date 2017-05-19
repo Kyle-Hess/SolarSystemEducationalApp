@@ -1,4 +1,4 @@
-package com.example.kyle.solarsystemeducationalapp;
+package com.solarlearning.kyle.solarsystemeducationalapp;
 
 import org.junit.Test;
 

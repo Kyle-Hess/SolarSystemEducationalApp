@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#0099cc"
     android:orientation="vertical"
-    tools:context="com.example.kyle.solarsystemeducationalapp.MainActivity">
+    tools:context="com.solarlearning.kyle.solarsystemeducationalapp.MainActivity">
 
     <include layout="@layout/video_background" />
     <!-- The primary full-screen view. This can be replaced with whatever view

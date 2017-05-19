@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/outer_space"
     android:orientation="vertical"
-    tools:context="com.example.kyle.solarsystemeducationalapp.SettingsActivity">
+    tools:context="com.solarlearning.kyle.solarsystemeducationalapp.SettingsActivity">
 
     <TextView
         android:id="@+id/textView3"

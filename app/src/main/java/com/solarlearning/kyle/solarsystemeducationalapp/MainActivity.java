@@ -1,4 +1,4 @@
-package com.example.kyle.solarsystemeducationalapp;
+package com.solarlearning.kyle.solarsystemeducationalapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
-//test
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        //findViewById(R.id.play_button).setOnTouchListener(mDelayHideTouchListener);
+        findViewById(R.id.play_button).setOnTouchListener(mDelayHideTouchListener);
         VideoView star = (VideoView) findViewById(R.id.videoView);
         star.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
